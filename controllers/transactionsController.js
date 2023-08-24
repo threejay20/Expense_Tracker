@@ -55,7 +55,10 @@ exports.addTransaction = async (req, res, next) => {
 // @access  Public
 exports.deleteTransaction = async (req, res, next) => {
   try {
+    console.log('Transaction ID to delete:', req.params.id);
     const transaction = await Transaction.findById(req.params.id);
+
+    console.log('Transaction found:', transaction);
 
     if(!transaction) {
       return res.status(404).json({
@@ -64,7 +67,7 @@ exports.deleteTransaction = async (req, res, next) => {
       });
     }
 
-    await transaction.remove();
+    await transaction.deleteOne();
 
     return res.status(200).json({
       success: true,
